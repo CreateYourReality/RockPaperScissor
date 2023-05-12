@@ -7,6 +7,7 @@ const roundsOutput = document.querySelector(".mid-content p")
 const startBtn = document.getElementById("startBtn");
 const playerBoard = document.querySelector(".player-board");
 const midField = document.querySelector(".mid");
+const computerTextOutputField = document.querySelector(".computerTextOutput");
 
 //const videoContainer = '<div class="video-container"></div>';
 
@@ -16,8 +17,13 @@ const scissorCard = '<img src="./assets/img/scissors.png" alt="scissor"><p>SCISS
 const echseCard = '<img src="./assets/img/lizard.png" alt="lizard"><p>LIZARD</p>';
 const spockCard = '<img src="./assets/img/spock.png" alt="spock"><p>SPOCK</p>';
 
-const compWin = 'url("https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZjE5MGVlMjljYzYxYzhkMjQ3ZWIwZjMyNzA3ZjE2N2I1ZDczNDRmOCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/f79OYWh5uwIfK/giphy.gif")';
+const compWinPoint = 'url("https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZjE5MGVlMjljYzYxYzhkMjQ3ZWIwZjMyNzA3ZjE2N2I1ZDczNDRmOCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/f79OYWh5uwIfK/giphy.gif")';
+const compLoosePoint = 'url("https://media.tenor.com/h7v2mDyxD-8AAAAC/sheldon.gif")';
+const compDrawPoint = 'url("https://media.tenor.com/0b2W8yEmnOgAAAAC/sheldon-cooper.gif")';
 
+const compLooseGame = 'url("https://media.tenor.com/CSykDmrFeAIAAAAC/im-stressed-sheldon-cooper.gif")';
+const compWinGame = 'url("https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTA4ZGMxZTg4NWVlN2YxMDVhMmNiNTA5MzJhYjg2MmVmYTdjMDY4ZCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/3ohs83cvmud7ThYTzq/giphy.gif")';
+const compDrawGame = 'url("https://media.tenor.com/SbpprT_et2cAAAAd/sheldon-cooper.gif")';
 
 
 let pointsPlayer = 0;
@@ -29,6 +35,7 @@ const computerCards = [];
 
 let round = 0;
 let maxRound = 5;
+let start = false;
 
 const SetNewCardDeck = () => {
     cardDeck = [
@@ -75,7 +82,6 @@ const VisualizePoints = () => {
 }
 
 const CardNumberToText = (num) =>{
-
     switch(num){
         case 1 : cardText = "Rock";break;
         case 2 : cardText = "Paper";break;
@@ -120,36 +126,53 @@ const GameLogic = (a,b) => {
     // spockCard 5
 
     if(a == 1){
-        if(b == 1){pointsComputer++;pointsPlayer++;return;}
-        else if(b == 2){pointsComputer++;return;}
-        else if(b == 3){pointsPlayer++;return;}
-        else if(b == 4){pointsPlayer++;return;}
-        else{pointsComputer++;return;}
+        if(b == 1){IncreaseBothPoints();return;}
+        else if(b == 2){IncreaseComputerPoints();return;}
+        else if(b == 3){IncreasePlayerPoints();return;}
+        else if(b == 4){IncreasePlayerPoints();return;}
+        else{IncreaseComputerPoints();return;}
     } else if(a == 2){
-        if(b==1){ pointsPlayer++;return;}
-        else if(b==2){pointsComputer++;pointsPlayer++;return;}
-        else if(b==3){pointsComputer++;return;}
-        else if(b==4) {pointsComputer++;return;}
-        else{pointsPlayer++;return;}
+        if(b==1){IncreasePlayerPoints();return;}
+        else if(b==2){IncreaseBothPoints();return;}
+        else if(b==3){IncreaseComputerPoints();return;}
+        else if(b==4) {IncreaseComputerPoints();return;}
+        else{IncreasePlayerPoints();return;}
     } else if(a == 3){
-        if(b==1){pointsComputer++;return;}
-        else if(b==2){pointsPlayer++;return;}
-        else if(b==3){pointsComputer++;pointsPlayer++;return;}
-        else if(b==4){pointsPlayer++;return;}
-        else{pointsComputer++;return;}
+        if(b==1){IncreaseComputerPoints();return;}
+        else if(b==2){IncreasePlayerPoints();return;}
+        else if(b==3){IncreaseBothPoints();return;}
+        else if(b==4){IncreasePlayerPoints();return;}
+        else{IncreaseComputerPoints();return;}
     }else if(a == 4){
-        if(b==1){pointsComputer++ ;return;}
-        else if(b==2){pointsPlayer++;return;}
-        else if(b==3){pointsComputer++;return;}
-        else if(b==4){pointsComputer++;pointsPlayer++;return;}
-        else{pointsPlayer++;return;}
+        if(b==1){IncreaseComputerPoints();return;}
+        else if(b==2){IncreasePlayerPoints();return;}
+        else if(b==3){IncreaseComputerPoints();return;}
+        else if(b==4){IncreaseBothPoints();return;}
+        else{IncreasePlayerPoints();return;}
         }else{
-        if(b==1){pointsPlayer++;return;}
-        else if(b==2){pointsComputer++;return;}
-        else if(b==3){pointsPlayer++;return;}
-        else if(b==4){pointsComputer;return;}
-        else{pointsComputer++;pointsPlayer++;return;}
+        if(b==1){IncreasePlayerPoints();return;}
+        else if(b==2){IncreaseComputerPoints();return;}
+        else if(b==3){IncreasePlayerPoints();return;}
+        else if(b==4){IncreaseComputerPoints();return;}
+        else{IncreaseBothPoints();return;}
     }
+}
+
+const IncreaseComputerPoints = () => {
+    pointsComputer++;
+    VideoPopup(1);
+}
+
+const IncreasePlayerPoints = () => {
+    pointsPlayer++;
+    VideoPopup(2);
+}
+
+const IncreaseBothPoints = () => {
+    pointsPlayer++;
+    pointsComputer++;
+    VideoPopup(3);
+
 }
 
 
@@ -167,11 +190,14 @@ const GiveNewCards = () =>{
 
 
 const StartGame = () => {
+    start = true;
     startBtn.remove();
     playerBoard.style.visibility = "visible";
     pointsPlayer = 0;
     pointsComputer = 0;
     round = 0;
+    computerTextOutputField.style.color = "black";
+    VideoPopup(0);
     SetNewCardDeck();
     shuffleArray(cardDeck);
     shuffleArray(cardDeck); //shuffle 3 times
@@ -194,7 +220,7 @@ const ComputerCardChoice = () =>{
 }
 
 
-const VideoPopup = () => {
+const VideoPopup = (x) => {
     let oldVideo = document.querySelector(".video-container");
 
     if(oldVideo != null)
@@ -205,32 +231,81 @@ const VideoPopup = () => {
     midField.appendChild(newVideo);
 
     oldVideo = document.querySelector(".video-container");
-    oldVideo.style.backgroundImage = compWin;
-    oldVideo.classList.add("start-animation");
 
+
+    // 1: compWinPoint
+    // 2: compLoosePoint
+    // 3: compDrawPoint
+
+    // 4: compLooseGame
+    // 5: compWinGame
+    // 6: compDrawGame
+
+    switch(x){
+        case 1: oldVideo.style.backgroundImage = compWinPoint;oldVideo.classList.add("start-animation");break;
+        case 2: oldVideo.style.backgroundImage = compLoosePoint;oldVideo.classList.add("start-animation");break;
+        case 3: oldVideo.style.backgroundImage = compDrawPoint;oldVideo.classList.add("start-animation");break;
+
+        case 4: oldVideo.style.backgroundImage = compLooseGame;oldVideo.classList.add("end-animation"); break;
+        case 5: oldVideo.style.backgroundImage = compWinGame;oldVideo.classList.add("end-animation");break;
+        case 6: oldVideo.style.backgroundImage = compDrawGame;oldVideo.classList.add("end-animation");break;
+        default: break;
+    }
+
+}
+
+
+const IncreaseRounds = () =>{
+    round++;
+
+    if(round == maxRound){
+        computerTextOutputField.innerHTML = "Das Spiel ist vorbei! " + GetWinner();
+        start = false;
+    }
+}
+
+
+const GetWinner = () =>{
+    let winnerText;
+
+    if(pointsComputer > pointsPlayer){
+        winnerText = "Computer gewinnt!";
+        computerTextOutputField.style.color = "red";
+        VideoPopup(5);
+    } else if(pointsPlayer > pointsComputer){
+        winnerText = "Spieler gewinnt!";
+        computerTextOutputField.style.color = "blue";
+        VideoPopup(4);
+    } else{
+        winnerText = "Unentschieden!";
+        computerTextOutputField.style.color = "green";
+        VideoPopup(6);
+    }
+    return winnerText;
 }
 
 const MyTurn = (x) => {
 
+    if(!start)
+        return;
+
     const computerChoice = computerCards[ComputerCardChoice()];
     const playerChoice = playerCards[x]; 
+    GameLogic(playerChoice,computerChoice);
 
     console.log(computerChoice);
     console.log(playerChoice);
-
-    GameLogic(playerChoice,computerChoice);
     console.log("Du hast "+(CardNumberToText(playerChoice))+" ausgewählt");
     console.log("Computer hat die Karte "+CardNumberToText(computerChoice)+" gewählt");
 
-  //  videoContainer.classList.remove("start-animation");
-    
-    VideoPopup();
+    computerTextOutputField.innerHTML = "Computer hat die Karte "+CardNumberToText(computerChoice)+" gewählt";
+
+    IncreaseRounds();
+  //  VideoPopup();
     VisualizePoints();
-    round++;
     VisualizeRounds();
     GiveNewCards();
     VisualizeCards(playerCards[0],playerCards[1]);
-//  console.log("cards left im Deck: "+cardDeck);
 }
 
 
