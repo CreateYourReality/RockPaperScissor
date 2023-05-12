@@ -1,42 +1,80 @@
-const leftWildcard = document.querySelector(".cardLeft");
-const rightWildcard = document.querySelector(".cardRight");
-const playerPointsOutput = document.querySelector(".pointsPlayer");
-const computerPointsOutput = document.querySelector(".pointsComputer");
-const roundsOutput = document.querySelector(".mid-content p")
-
-const startBtn = document.getElementById("startBtn");
-const playerBoard = document.querySelector(".player-board");
-const midField = document.querySelector(".mid");
-const computerTextOutputField = document.querySelector(".computerTextOutput");
-
-//const videoContainer = '<div class="video-container"></div>';
-
+// ############################################### WILDCARDS #####################################################
 const rockCard = '<img src="./assets/img/rock.png" alt="rock"><p>ROCK</p>';
 const paperCard = '<img src="./assets/img/paper.png" alt="paper"><p>PAPER</p>';
 const scissorCard = '<img src="./assets/img/scissors.png" alt="scissor"><p>SCISSOR</p>';
 const echseCard = '<img src="./assets/img/lizard.png" alt="lizard"><p>LIZARD</p>';
 const spockCard = '<img src="./assets/img/spock.png" alt="spock"><p>SPOCK</p>';
 
+const rockCardNOP = '<img src="./assets/img/rock.png" alt="rock">';
+const paperCardNOP = '<img src="./assets/img/paper.png" alt="paper">';
+const scissorCardNOP = '<img src="./assets/img/scissors.png" alt="scissor">';
+const echseCardNOP = '<img src="./assets/img/lizard.png" alt="lizard">';
+const spockCardNOP = '<img src="./assets/img/spock.png" alt="spock">';
+
+
 const compWinPoint = 'url("https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZjE5MGVlMjljYzYxYzhkMjQ3ZWIwZjMyNzA3ZjE2N2I1ZDczNDRmOCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/f79OYWh5uwIfK/giphy.gif")';
 const compLoosePoint = 'url("https://media.tenor.com/h7v2mDyxD-8AAAAC/sheldon.gif")';
 const compDrawPoint = 'url("https://media.tenor.com/0b2W8yEmnOgAAAAC/sheldon-cooper.gif")';
-
 const compLooseGame = 'url("https://media.tenor.com/CSykDmrFeAIAAAAC/im-stressed-sheldon-cooper.gif")';
 const compWinGame = 'url("https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTA4ZGMxZTg4NWVlN2YxMDVhMmNiNTA5MzJhYjg2MmVmYTdjMDY4ZCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/3ohs83cvmud7ThYTzq/giphy.gif")';
 const compDrawGame = 'url("https://media.tenor.com/SbpprT_et2cAAAAd/sheldon-cooper.gif")';
+// ###############################################################################################################
 
+const playerPointsOutput = document.querySelector(".pointsPlayer");
+const computerPointsOutput = document.querySelector(".pointsComputer");
+const roundsOutput = document.querySelector(".mid-content p")
+
+const startBtn = document.getElementById("startBtn");
+const playerBoard = document.getElementById("player-board");
+const midField = document.querySelector(".mid-points");
+const computerTextOutputField = document.querySelector(".computerTextOutput");
+const gameModeSelect = document.getElementById("gameMode");
+const extracards = '"<article id="extraCards"><div class="card2" onclick="MyTurn(2)"></div><div class="card3" onclick="MyTurn(3)"></div><div class="card4" onclick="MyTurn(4)"></div><div class="card5" onclick="MyTurn(5)"></div><div class="card6" onclick="MyTurn(6)"></div<div class="card7" onclick="MyTurn(7)"></div><div class="card8" onclick="MyTurn(8)"></div><div class="card9" onclick="MyTurn(9)"></div><div class="card10" onclick="MyTurn(10)"></div><div class="card11" onclick="MyTurn(11)"></div><div class="card12" onclick="MyTurn(12)"></div><div class="card13" onclick="MyTurn(13)"></div></article>"';
 
 let pointsPlayer = 0;
 let pointsComputer = 0;
 
 let cardDeck = [];
-const playerCards = [];
-const computerCards = [];
+let playerCards = [];
+let computerCards = [];
 
+let layingCards = [];
+
+let cardOne = "";
+let cardTwo = "";
+let cardThree = "";
+let cardFour = "";
+let cardFive = "";
+
+//####### General values #####
 let round = 0;
 let maxRound = 5;
 let start = false;
+let gameMode = "classic";
+let isClassic = false;
+let isClassicDeluxe = false;
+let isCardGame = false;
 
+//Change Game Mode
+const ChangeGameMode = () => {
+    isClassicDeluxe = false;
+    isClassic = false;
+    isCardGame = false;
+    gameMode = gameModeSelect.value;
+    StartGame();
+}
+
+//Change rounds
+const changeRadio = (x) => {
+    isCardGame = false;
+    isClassic = false;
+    isClassicDeluxe = false;
+    maxRound = x;
+    VisualizeRounds();
+    StartGame();
+}
+
+//Create a new Deck of Cards
 const SetNewCardDeck = () => {
     cardDeck = [
         1,2,3,4,5,
@@ -54,10 +92,17 @@ const SetNewCardDeck = () => {
     ];
 }
 
-const changeRadio = (x) => {
-    maxRound = x;
-    VisualizeRounds();
-    StartGame();
+// For Output
+const CardNumberToText = (num) =>{
+    let cardText = "";
+    switch(num){
+        case 1 : cardText = "Rock";break;
+        case 2 : cardText = "Paper";break;
+        case 3 : cardText = "Scissor";break;
+        case 4 : cardText = "Lizard";break;
+        case 5 : cardText = "Spock";break;
+    }
+    return cardText;
 }
 
 //The Fisher-Yates algorith
@@ -70,26 +115,47 @@ const shuffleArray = array => {
     }
 }
 
+const IncreaseRounds = () =>{
+    round++;
+    if(round == maxRound){
+        computerTextOutputField.innerHTML = "Das Spiel ist vorbei! " + GetWinner();
+        start = false;
+    }
+}
+
 const VisualizeRounds = () => {
     roundsOutput.innerHTML = round + " / " + maxRound;
 }
 
 const VisualizePoints = () => {
-    console.log("Points player "+pointsPlayer);
-    console.log("Points computer "+pointsComputer);
     playerPointsOutput.innerHTML = pointsPlayer;
     computerPointsOutput.innerHTML = pointsComputer;
 }
 
-const CardNumberToText = (num) =>{
-    switch(num){
-        case 1 : cardText = "Rock";break;
-        case 2 : cardText = "Paper";break;
-        case 3 : cardText = "Scissor";break;
-        case 4 : cardText = "Lizard";break;
-        case 5 : cardText = "Spock";break;
+const CreateSingleCard = (className,cardIndex) => {
+    let newCard = document.createElement("div");
+    newCard.className = className;
+    newCard.onclick = function() { MyTurn(cardIndex); }
+    playerBoard.appendChild(newCard);
+}
+
+const CreateNewCards = () => {
+    CreateSingleCard("cardLeft",0);
+    CreateSingleCard("cardRight",1);
+    cardOne = document.querySelector(".cardLeft");
+    cardTwo = document.querySelector(".cardRight");
+
+    if(gameMode == "classic" || gameMode == "classicDeluxe"){
+        CreateSingleCard("cardThree",2);
+        cardThree = document.querySelector(".cardThree");
+
+        if(gameMode == "classicDeluxe"){
+            CreateSingleCard("cardFour",3);
+            CreateSingleCard("cardFive",4);
+            cardFour = document.querySelector(".cardFour");
+            cardFive = document.querySelector(".cardFive");
+        }
     }
-    return cardText;
 }
 
 const VisualizeCards = () =>{
@@ -112,9 +178,67 @@ const VisualizeCards = () =>{
         case 5: cardRight = spockCard;break;
     }
     
-    leftWildcard.innerHTML = cardLeft;
-    rightWildcard.innerHTML = cardRight;
+    cardOne.innerHTML = cardLeft;
+    cardTwo.innerHTML = cardRight;
+    playerBoard.style.flexWrap="nowrap";
 }
+
+
+const VisualizeCardsClassic = () =>{
+    if(!isClassic){
+        cardOne.innerHTML = rockCard;
+        cardTwo.innerHTML = paperCard;
+        cardThree.innerHTML = scissorCard;
+        isClassic = true;
+        playerBoard.style.flexWrap="nowrap";
+    }
+}
+
+const VisualizeCardsClassicDeluxe = () =>{
+    if(!isClassicDeluxe){
+        cardOne.innerHTML = rockCard;
+        cardTwo.innerHTML = paperCard;
+        cardThree.innerHTML = scissorCard;
+        cardFour.innerHTML = echseCard;
+        cardFive.innerHTML = spockCard;
+        isClassicDeluxe = true;
+        playerBoard.style.flexWrap="nowrap";
+    }
+}
+
+const GiveNewCardsCardGame = () => {
+    for(let i = 0; i < maxRound;i++){
+        playerCards.push(cardDeck.pop());
+        computerCards.push(cardDeck.pop());
+    }
+    //   console.log(cardDeck);
+    //   console.log(playerCards);
+    //   console.log(computerCards);
+}
+
+const VisualizeCardsCardGame = () =>{
+    
+    if(!isCardGame){
+        let increase = 0;
+
+        playerCards.forEach(playerCard => {
+            CreateSingleCard("card card"+increase,increase);
+            layingCards[increase] = document.querySelector(".card"+increase);
+            switch(playerCard){
+                case 1: layingCards[increase].innerHTML = rockCardNOP;break;
+                case 2: layingCards[increase].innerHTML = paperCardNOP;break;
+                case 3: layingCards[increase].innerHTML = scissorCardNOP;break;
+                case 4: layingCards[increase].innerHTML = echseCardNOP;break;
+                case 5: layingCards[increase].innerHTML = spockCardNOP;break;
+            }
+
+            increase++;
+        });
+        isCardGame = true;
+        playerBoard.style.flexWrap="wrap";
+    }
+}
+
 
 const GameLogic = (a,b) => {
     //a = player / b = computer
@@ -172,9 +296,7 @@ const IncreaseBothPoints = () => {
     pointsPlayer++;
     pointsComputer++;
     VideoPopup(3);
-
 }
-
 
 const GiveNewCards = () =>{
     playerCards.pop();
@@ -189,21 +311,91 @@ const GiveNewCards = () =>{
 }  
 
 
+const GiveNewCardsClassic = () => {
+    playerCards[0] = 1;
+    playerCards[1] = 2;
+    playerCards[2] = 3;
+
+    computerCards[0] = 1;
+    computerCards[1] = 2;
+    computerCards[2] = 3;
+}
+
+const GiveNewCardsClassicDeluxe = () => {
+    playerCards[0] = 1;
+    playerCards[1] = 2;
+    playerCards[2] = 3;
+    playerCards[3] = 4;
+    playerCards[4] = 5;
+
+    computerCards[0] = 1;
+    computerCards[1] = 2;
+    computerCards[2] = 3;
+    computerCards[3] = 4;
+    computerCards[4] = 5;
+}
+
+
+
+
 const StartGame = () => {
     start = true;
-    startBtn.remove();
+    startBtn.remove();   
+    
+    if(cardThree != "")
+        cardThree.remove();
+
+    if(cardFour != "")
+        cardFour.remove();
+
+    if(cardFive != "")
+        cardFive.remove();
+
+    if(cardOne != "")
+        cardOne.remove();
+        
+    if(cardTwo != "")
+        cardTwo.remove(); 
+        
+        layingCards.forEach(card => {
+            card.remove();
+        });    
+    
     playerBoard.style.visibility = "visible";
     pointsPlayer = 0;
     pointsComputer = 0;
     round = 0;
+    playerCards = [];
+    computerCards = [];
     computerTextOutputField.style.color = "black";
     VideoPopup(0);
-    SetNewCardDeck();
-    shuffleArray(cardDeck);
-    shuffleArray(cardDeck); //shuffle 3 times
-    shuffleArray(cardDeck);
-    GiveNewCards();
-    VisualizeCards();
+
+
+    if(gameMode == "classic"){
+        CreateNewCards();
+        GiveNewCardsClassic();
+        VisualizeCardsClassic();
+    } else if(gameMode == "classicDeluxe"){
+        CreateNewCards();
+        GiveNewCardsClassicDeluxe();
+        VisualizeCardsClassicDeluxe();
+    }  else if(gameMode == "2card"){
+        CreateNewCards();
+        SetNewCardDeck();
+        shuffleArray(cardDeck);
+        shuffleArray(cardDeck); //shuffle 3 times
+        shuffleArray(cardDeck);
+        GiveNewCards();
+        VisualizeCards();
+    } else if(gameMode == "cardgame"){
+        SetNewCardDeck();
+        shuffleArray(cardDeck);
+        shuffleArray(cardDeck); //shuffle 3 times
+        shuffleArray(cardDeck);
+        GiveNewCardsCardGame();
+        VisualizeCardsCardGame();
+    }
+
     VisualizePoints();
     VisualizeRounds();
 }
@@ -217,6 +409,12 @@ const ComputerCardChoice = () =>{
 
     flip1 === flip2 ? computerChoice = 0 : computerChoice = 1; 
     return computerChoice; //0 = left Card, 1 = right Card
+}
+
+const ComputerCardChoiceClassic = (min,max) =>{
+    let computerChoice = Math.floor(Math.random() * (max - min + 1) + min); // 0 bis 2 (change 1:3)
+
+    return computerChoice;
 }
 
 
@@ -255,14 +453,7 @@ const VideoPopup = (x) => {
 }
 
 
-const IncreaseRounds = () =>{
-    round++;
 
-    if(round == maxRound){
-        computerTextOutputField.innerHTML = "Das Spiel ist vorbei! " + GetWinner();
-        start = false;
-    }
-}
 
 
 const GetWinner = () =>{
@@ -289,23 +480,91 @@ const MyTurn = (x) => {
     if(!start)
         return;
 
-    const computerChoice = computerCards[ComputerCardChoice()];
+    if(gameMode == "classic"){
+        GameModeClassic(x);
+    } else if(gameMode == "classicDeluxe"){
+        GameModeClassicDeluxe(x);
+    } else if(gameMode == "2card"){
+        GameMode2Card(x);
+    } else if(gameMode == "cardgame"){
+        GameModeCardGame(x);
+    }
+
+    IncreaseRounds();
+    VisualizePoints();
+    VisualizeRounds();
+
+}
+
+
+const GameModeClassic = (x) => {
+
+    const computerChoice = computerCards[ComputerCardChoiceClassic(0,2)];
     const playerChoice = playerCards[x]; 
-    GameLogic(playerChoice,computerChoice);
 
     console.log(computerChoice);
     console.log(playerChoice);
     console.log("Du hast "+(CardNumberToText(playerChoice))+" ausgewählt");
     console.log("Computer hat die Karte "+CardNumberToText(computerChoice)+" gewählt");
 
+    GameLogic(playerChoice,computerChoice);
     computerTextOutputField.innerHTML = "Computer hat die Karte "+CardNumberToText(computerChoice)+" gewählt";
 
-    IncreaseRounds();
-  //  VideoPopup();
-    VisualizePoints();
-    VisualizeRounds();
+    GiveNewCardsClassic();
+    VisualizeCardsClassic();
+}
+
+const GameModeClassicDeluxe = (x) => {
+
+    const computerChoice = computerCards[ComputerCardChoiceClassic(0,4)];
+    const playerChoice = playerCards[x]; 
+
+    console.log(computerChoice);
+    console.log(playerChoice);
+    console.log("Du hast "+(CardNumberToText(playerChoice))+" ausgewählt");
+    console.log("Computer hat die Karte "+CardNumberToText(computerChoice)+" gewählt");
+
+    GameLogic(playerChoice,computerChoice);
+    computerTextOutputField.innerHTML = "Computer hat die Karte "+CardNumberToText(computerChoice)+" gewählt";
+
+    GiveNewCardsClassicDeluxe();
+    VisualizeCardsClassicDeluxe();
+}
+
+const GameMode2Card = (x) => {
+    const computerChoice = computerCards[ComputerCardChoice()];
+    const playerChoice = playerCards[x]; 
+
+    GameLogic(playerChoice,computerChoice);
+    computerTextOutputField.innerHTML = "Computer hat die Karte "+CardNumberToText(computerChoice)+" gewählt";
+
     GiveNewCards();
     VisualizeCards(playerCards[0],playerCards[1]);
+
+}
+
+const GameModeCardGame = (x) => {
+
+    const computerChoice = computerCards[ComputerCardChoiceClassic(0,maxRound-1)];
+    const playerChoice = playerCards[x]; 
+
+    layingCards[x].remove();
+
+    OutputConsole(computerChoice,playerChoice);
+
+    GameLogic(playerChoice,computerChoice);
+    computerTextOutputField.innerHTML = "Computer hat die Karte "+CardNumberToText(computerChoice)+" gewählt";
+
+ //   GiveNewCardsCardGame();
+   //VisualizeCardsCardGame();
+}
+
+
+const OutputConsole = (cC,pC) => {
+    console.log(cC);
+    console.log(pC);
+    console.log("Du hast "+(CardNumberToText(pC))+" ausgewählt");
+    console.log("Computer hat die Karte "+CardNumberToText(cC)+" gewählt");
 }
 
 
@@ -331,6 +590,3 @@ window.onclick = function(event) {
 
 
 //StartGame();
-console.log("Start Game CardDeck: "+cardDeck);
-console.log("aktuelle playerCards: "+ playerCards);
-console.log("aktuelle computerCards: "+computerCards);

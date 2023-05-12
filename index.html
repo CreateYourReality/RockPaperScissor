@@ -21,14 +21,18 @@
                 <label for="">
                     <input onclick="changeRadio(15)" type="radio" name="rounds"> 15 Runden
                 </label>
+                <select onchange="ChangeGameMode()" name="gameMode" id="gameMode">
+                    <option value="classic">Classic</option>
+                    <option value="classicDeluxe">Classic Deluxe</option>
+                    <option value="2card">2Card</option>
+                    <option value="cardgame">CardGame</option>
+                </select>
             </form>
-
             <div class="mid-content">
                 <h2>Round</h2>
                 <p> 0 / 5</p>
             </div>
-
-            <div class="mid">
+            <div class="mid-points">
                 <div class="points">
                     <div>
                         <p>Player</p>
@@ -39,23 +43,12 @@
                         <p class="pointsComputer">0</p>
                     </div>
                 </div>
-
-
             </div>
-
-
-
-            <div class="player-board">
-                <div class="cardLeft" onclick="MyTurn(0)"></div>
-                <div class="cardRight" onclick="MyTurn(1)"></div>
-            </div>
-
+            <div id="player-board"></div>
             <div onclick="StartGame()" id="startBtn">
                 <h4 >START</h4>
             </div>
             <p class="computerTextOutput">Der Computer wartet auf deine Eingabe...</p>
-
-
             <a id="infoBtn" href="#">Impressum</a>
         </section>
 
@@ -71,14 +64,14 @@
               <a href="https://www.flaticon.com/free-icons/scissors" title="scissors icons">Scissors icons created by Cap Cool - Flaticon</a>
               <a href="https://openclipart.org/detail/325665/rock-paper-scissors-lizard-spock">Rules Images by Openclipart.org</a>
 
-            <div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/f79OYWh5uwIfK" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/cbs-f79OYWh5uwIfK">via GIPHY</a></p>
-            <div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/3ohs83cvmud7ThYTzq" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/cbs-big-bang-theory-3ohs83cvmud7ThYTzq">via GIPHY</a></p>
-            <img src="https://media.tenor.com/0b2W8yEmnOgAAAAC/sheldon-cooper.gif" alt="">
-            <img src="https://media.tenor.com/SbpprT_et2cAAAAd/sheldon-cooper.gif" alt="">
-            <div class="tenor-gif-embed" data-postid="16590451" data-share-method="host" data-aspect-ratio="1.77778" data-width="100%"><a href="https://tenor.com/view/im-stressed-sheldon-cooper-panicking-nervous-anxious-gif-16590451">Im Stressed Sheldon Cooper GIF</a>from <a href="https://tenor.com/search/im+stressed-gifs">Im Stressed GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>              
-            <div class="tenor-gif-embed" data-postid="23246709" data-share-method="host" data-aspect-ratio="1" data-width="100%"><a href="https://tenor.com/view/sheldon-gif-23246709">Sheldon GIF</a>from <a href="https://tenor.com/search/sheldon-gifs">Sheldon GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+              <div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/f79OYWh5uwIfK" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/cbs-f79OYWh5uwIfK">via GIPHY</a></p>
+              <div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/3ohs83cvmud7ThYTzq" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/cbs-big-bang-theory-3ohs83cvmud7ThYTzq">via GIPHY</a></p>
+              <img src="https://media.tenor.com/0b2W8yEmnOgAAAAC/sheldon-cooper.gif" alt="">
+              <img src="https://media.tenor.com/SbpprT_et2cAAAAd/sheldon-cooper.gif" alt="">
+              <div class="tenor-gif-embed" data-postid="16590451" data-share-method="host" data-aspect-ratio="1.77778" data-width="100%"><a href="https://tenor.com/view/im-stressed-sheldon-cooper-panicking-nervous-anxious-gif-16590451">Im Stressed Sheldon Cooper GIF</a>from <a href="https://tenor.com/search/im+stressed-gifs">Im Stressed GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>              
+              <div class="tenor-gif-embed" data-postid="23246709" data-share-method="host" data-aspect-ratio="1" data-width="100%"><a href="https://tenor.com/view/sheldon-gif-23246709">Sheldon GIF</a>from <a href="https://tenor.com/search/sheldon-gifs">Sheldon GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
             </div>    
-          </div>
+        </div>
     </main>
     <script type="text/javascript" src="./assets/main.js"></script>
 </body>

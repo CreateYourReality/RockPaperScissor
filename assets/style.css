@@ -1,3 +1,16 @@
+
+@keyframes videoPopup {
+    0%{opacity: 100%; z-index: 1;}  
+    80%{ opacity: 70%;}
+    100%{opacity: 0%; z-index: -1;}
+}
+
+@keyframes videoPopupEnd {
+    0%{opacity: 100%; z-index: 1;}  
+    80%{ opacity: 100%;z-index: 1;}
+    100%{opacity: 100%;z-index: 1;}
+}
+
 *{
     margin:0;
     padding:0;
@@ -11,6 +24,10 @@
     --red:lightcoral;
     --blue:lightblue;
     --yellow:lightyellow;
+    --purple:purple;
+    --plum:plum;
+    --playerColor:blue;
+    --computerColor:red;
 }
 
 html{
@@ -21,7 +38,6 @@ html{
 img{
     max-width: 100%;
 }
-
 
 p,a{
     font-size: clamp(1rem,1.5vw,2rem);
@@ -54,15 +70,15 @@ main{
 
 section{
     background-color: var(--green);
+    border: 5px var(--black) groove;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     height: 80vh;
     width:400px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 5px var(--black) groove;
-    border-radius: 15px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 form{
@@ -74,51 +90,51 @@ form{
 
 input[type="radio"]{
     accent-color: var(--red);
+}
 
+select{
+    border-radius: 15px;
 }
 
 label{
+    font-size: clamp(.8rem,.6vw,.8rem);
+    margin: 1vw 0;
     transform: scale(2);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 1vw 0;
-    font-size: clamp(.8rem,.8vw,1rem);
 }
 
 #startBtn{
-    background-color: purple;
-    color: white;
+    background-color: var(--purple);
+    color: var(--white);
     padding: 50px 100px;
     border-radius: 15px;
-    cursor: pointer;
     margin-bottom: 0.5vw;
+    cursor: pointer;
 }
 
 #startBtn:hover{
-    color: black;
-    background-color: plum;
+    color: var(--black);
+    background-color: var(--plum);
 }
 
 .computerTextOutput{
-    background-color: var(--white);
-    padding: 5px 10px;
-    border-radius: 15px;
     font-size: clamp(1.5rem,1.2vw,2rem);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: var(--white);
+    border-radius: 15px;
+    padding: 5px 10px;
     opacity: 80%;
-
-
 }
 
-.mid{
+.mid-points{
     height: 100%;
     width: 100%;
     background: var(--red) url("./img/rules.png") center no-repeat;
     background-size: contain;
-    position: relative;
-    
+    position: relative;   
 }
 
 .video-container{
@@ -139,18 +155,6 @@ label{
 
 .end-animation{
     animation:videoPopupEnd 2s linear infinite;
-}
-
-@keyframes videoPopup {
-    0%{opacity: 100%; z-index: 1;}  
-    80%{ opacity: 70%;}
-    100%{opacity: 0%; z-index: -1;}
-}
-
-@keyframes videoPopupEnd {
-    0%{opacity: 100%; z-index: 1;}  
-    80%{ opacity: 100%;z-index: 1;}
-    100%{opacity: 100%;z-index: 1;}
 }
 
 .mid-content{
@@ -179,7 +183,7 @@ label{
     padding: 0 .5vw;
 }
 
-.player-board{
+#player-board{
     display: flex;
     align-items: flex-end;
     justify-content: space-around;
@@ -188,23 +192,26 @@ label{
 }
 
 .pointsPlayer{
-    color: blue;
+    color: var(--playerColor);
     font-size: clamp(4rem,4vw,6rem);
 }
 
 .pointsComputer{
-    color:red;
+    color:var(--computerColor);
     font-size: clamp(4rem,4vw,6rem);
 }
 
-
-
-.cardLeft,.cardRight{
+.cardLeft,
+.cardRight,
+.cardThree,
+.cardFour,
+.cardFive,
+.card{
     background-color: var(--blue);
-    width:30%;
-    height:100%;
     border:1px solid var(--black);
     border-radius: 15px;
+    width:30%;
+    height:100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -215,29 +222,42 @@ label{
     padding: 5px;
 }
 
-.cardLeft img,.cardRight img{
+.card{
+    width:50px;
+    height: 50px;
+}
+
+.cardLeft img,
+.cardRight img,
+.cardThree img,
+.cardFour img,
+.cardFive img{
     width: 70%;
     margin-bottom: 1vh;
 }
 
-.cardLeft:hover, .cardRight:hover{
+.card img{
+    width: 70%;
+}
+
+.cardLeft:hover,
+.cardRight:hover,
+.cardThree:hover,
+.cardFour:hover,
+.cardFive:hover,
+.card:hover{
     background-color: var(--yellow);
 }
 
-
 #infoBtn{
-    color: purple;
+    color: var(--purple);
     padding: 1vw;
     text-decoration: none;
-
 }
 
 #infoBtn:hover{
     color:var(--yellow);
-
 }
-
-
 
 /* ####### Modal Content ######## */
 .modal {
