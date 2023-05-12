@@ -189,10 +189,15 @@ const VisualizeCardsClassic = () =>{
 const VisualizeCardsClassicDeluxe = () =>{
     if(!isClassicDeluxe){
         layingCards[0].innerHTML = rockCard;
+        layingCards[0].classList.add("cardSmall");
         layingCards[1].innerHTML = paperCard;
+        layingCards[1].classList.add("cardSmall");
         layingCards[2].innerHTML = scissorCard;
+        layingCards[2].classList.add("cardSmall");
         layingCards[3].innerHTML = echseCard;
+        layingCards[3].classList.add("cardSmall");
         layingCards[4].innerHTML = spockCard;
+        layingCards[4].classList.add("cardSmall");
         isClassicDeluxe = true;
         playerBoard.style.flexWrap="nowrap";
     }

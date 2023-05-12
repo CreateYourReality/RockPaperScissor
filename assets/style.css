@@ -206,7 +206,8 @@ label{
 .cardThree,
 .cardFour,
 .cardFive,
-.card{
+.card,
+.cardSmall{
     background-color: var(--blue);
     border:1px solid var(--black);
     border-radius: 15px;
@@ -227,6 +228,16 @@ label{
     height: 50px;
 }
 
+.cardSmall{
+    width: 70px;
+    height:120px;
+    margin-left:5px;
+}
+
+.cardSmall p{
+    font-size: clamp(1rem,1vw,1.4rem);
+}
+
 .cardLeft img,
 .cardRight img,
 .cardThree img,
@@ -236,7 +247,8 @@ label{
     margin-bottom: 1vh;
 }
 
-.card img{
+.card img,
+.cardSmall img{
     width: 70%;
 }
 
@@ -245,7 +257,8 @@ label{
 .cardThree:hover,
 .cardFour:hover,
 .cardFive:hover,
-.card:hover{
+.card:hover,
+.cardSmall:hover{
     background-color: var(--yellow);
 }
 
