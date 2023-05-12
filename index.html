@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/style.css">
+    <title>JS PROJEKT - ROCK, PAPER, SCISSOR</title>
+</head>
+<body>
+    <main>
+        <section>
+                <h1>ROCK, PAPER, SCISSOR, LIZARD, SPOCK</h1>
+            <form>
+                <label for="">
+                    <input onclick="changeRadio(5)" type="radio" name="rounds" checked> 5 Runden
+                </label>
+                <label for="">
+                    <input onclick="changeRadio(10)" type="radio" name="rounds"> 10 Runden
+                </label>
+                <label for="">
+                    <input onclick="changeRadio(15)" type="radio" name="rounds"> 15 Runden
+                </label>
+            </form>
+
+            <div class="mid-content">
+                <h2>Round</h2>
+                <p> 0 / 5</p>
+            </div>
+
+            <div class="mid">
+                <div class="points">
+                    <div>
+                        <p>Player</p>
+                        <p class="pointsPlayer">0</p>
+                    </div>
+                    <div>
+                        <p>Computer</p>
+                        <p class="pointsComputer">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="player-board">
+                <div class="cardLeft" onclick="MyTurn(0)"></div>
+                <div class="cardRight" onclick="MyTurn(1)"></div>
+            </div>
+
+            <div onclick="StartGame()" id="startBtn">
+                <h4 >START</h4>
+            </div>
+
+            <p>Computertext</p>
+
+            <a id="infoBtn" href="#">Impressum</a>
+        </section>
+
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+              <span id="close">&times;</span>
+              <h3>Rock, Paper, Scissor, Lizard, Spock (2023)</h3>
+              <a href="https://www.flaticon.com/free-icons/hand" title="hand icons">Hand icons created by Vitaly Gorbachev - Flaticon</a>
+              <a href="https://www.flaticon.com/free-icons/lizard" title="lizard icons">Lizard icons created by Cap Cool - Flaticon</a>
+              <a href="https://www.flaticon.com/free-icons/star-trek" title="star trek icons">Star trek icons created by Freepik - Flaticon</a>
+              <a href="https://www.flaticon.com/free-icons/fist" title="fist icons">Fist icons created by Cuputo - Flaticon</a>
+              <a href="https://www.flaticon.com/free-icons/scissors" title="scissors icons">Scissors icons created by Cap Cool - Flaticon</a>
+              <a href="https://openclipart.org/detail/325665/rock-paper-scissors-lizard-spock">Rules Images by Openclipart.org</a>
+
+            <div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/f79OYWh5uwIfK" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/cbs-f79OYWh5uwIfK">via GIPHY</a></p>
+            <div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/3ohs83cvmud7ThYTzq" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/cbs-big-bang-theory-3ohs83cvmud7ThYTzq">via GIPHY</a></p>
+            <img src="https://media.tenor.com/0b2W8yEmnOgAAAAC/sheldon-cooper.gif" alt="">
+            <img src="https://media.tenor.com/SbpprT_et2cAAAAd/sheldon-cooper.gif" alt="">
+              
+            </div>    
+          </div>
+    </main>
+    <script type="text/javascript" src="./assets/main.js"></script>
+</body>
+</html>
+

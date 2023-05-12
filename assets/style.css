@@ -1,0 +1,260 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+:root{
+    --white:#fff;
+    --black:#000;
+    --green:lightseagreen;
+    --red:lightcoral;
+    --blue:lightblue;
+    --yellow:lightyellow;
+}
+
+html{
+    font-size: 62.5%;
+}
+
+img{
+    max-width: 100%;
+}
+
+
+p,a{
+    font-size: clamp(1rem,1.5vw,2rem);
+}
+
+h1{
+    margin: .5vh 0;
+    font-size: clamp(2.5rem,2vw,3rem);
+    text-align: center;
+}
+
+h2{
+    font-size: clamp(2rem,2.5vw,4rem);
+}
+
+h3{
+    margin-bottom: 1vh;
+ }
+
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+section{
+    background-color: var(--green);
+    height: 80vh;
+    width:400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 5px var(--black) groove;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+form{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+input[type="radio"]{
+    accent-color: var(--red);
+
+}
+
+label{
+    transform: scale(2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 1vw 0;
+    font-size: clamp(.8rem,.8vw,1rem);
+}
+
+#startBtn{
+    background-color: purple;
+    color: white;
+    padding: 8vw 15vw;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+#startBtn:hover{
+    color: black;
+    background-color: plum;
+}
+
+
+.mid{
+    height: 100%;
+    width: 100%;
+    background: var(--red) url("./img/rules.png") center no-repeat;
+    background-size: contain;
+    position: relative;
+    
+}
+
+.video-container{
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    width: 200px;
+    height: 160px;
+    background: url("") no-repeat center;
+    background-size: cover;
+    opacity: 0%;
+    z-index: -1;
+}
+
+.start-animation{
+    animation:videoPopup 3s linear;
+}
+
+@keyframes videoPopup {
+    0%{opacity: 100%; z-index: 1;}  
+    80%{ opacity: 70%;}
+    100%{opacity: 0%; z-index: -1;}
+}
+
+.mid-content{
+    text-align: center;
+    margin: 1vh 0;
+}
+
+.mid-content p{
+    font-size: clamp(2rem,3vw,4rem);
+}
+
+.points{
+    display: flex;
+    justify-content: space-between;
+}
+
+.points > div{
+    padding-top: 1vh;
+    display: flex;
+    align-items: center;
+    flex-direction:column;
+}
+
+.points p{
+    display: inline-block;
+    padding: 0 .5vw;
+}
+
+.player-board{
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    padding: 1vw;
+    visibility: hidden;
+}
+
+.pointsPlayer{
+    color: blue;
+    font-size: clamp(4rem,4vw,6rem);
+}
+
+.pointsComputer{
+    color:red;
+    font-size: clamp(4rem,4vw,6rem);
+}
+
+
+
+.cardLeft,.cardRight{
+    background-color: var(--blue);
+    width:30%;
+    height:100%;
+    border:1px solid var(--black);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.cardLeft img,.cardRight img{
+    width: 70%;
+    margin-bottom: 1vh;
+}
+
+.cardLeft:hover, .cardRight:hover{
+    background-color: var(--yellow);
+}
+
+
+#infoBtn{
+    color: purple;
+    padding: 1vw;
+    text-decoration: none;
+
+}
+
+#infoBtn:hover{
+    color:var(--yellow);
+
+}
+
+
+
+/* ####### Modal Content ######## */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+    padding: 5vw 5vw;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;  }
+
+  .modal-content a{
+    display: block;
+    margin-bottom: 0.5vw;
+  }
+  
+  /* The Close Button */
+  #close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
